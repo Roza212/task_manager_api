@@ -82,20 +82,42 @@ Implemented JWT-based authentication and password hashing in `app/auth.py`.
   - `create_access_token(data)`: Generates a JWT access token using `python-jose` (HS256 algorithm) with a 30-minute expiry.
   - `get_current_user()`: A FastAPI dependency that extracts the `Bearer` token from the `Authorization` header, decodes it, and retrieves the corresponding `User` object from the database, raising 401 Unauthorized for missing, invalid, or expired tokens.
 
+## API Routers
 
-## Database & Models Configuration
+User authentication and Task CRUD endpoints have been implemented and registered.
 
-The SQLAlchemy database and ORM models have been implemented and connected to the main application:
+- **`app/routers/users.py`**:
+  - Registered an `APIRouter` with the `/auth` prefix.
+  - `POST /auth/signup`: Accepts email and password. Validates that the email is not already in use. Hashes the password and saves the new user to the database. Returns `201 Created` with the `UserResponse` schema.
+  - `POST /auth/login`: Accepts email and password. Validates credentials. Returns a JWT bearer token upon success or a `401 Unauthorized` if invalid.
 
-- **`app/models.py`**:
-  - `User` model: `id` (PK), `email` (unique, not null), `hashed_password` (not null).
-  - `Task` model: `id` (PK), `title` (max 200, not null), `description` (optional), `status` (default 'open'), `due_date` (optional), `owner_id` (FK to `users.id`).
-  - Added bidirectional SQLAlchemy relationships (`tasks` and `owner`).
-
-- **`app/database.py`**:
-  - Configured to use a SQLite database file named `qa_tasks.db`.
-  - Initialized SQLAlchemy `engine` and `SessionLocal`.
-  - Added a `get_db()` dependency generator to safely yield and close database sessions.
+- **`app/routers/tasks.py`**:
+  - All endpoints use the `get_current_user` dependency to require a valid JWT token.
+  - `POST /tasks`: Creates a new task. The `owner_id` is automatically set to the current user's ID, and `status` to "open". Returns `201 Created`.
+  - `GET /tasks`: Retrieves all tasks belonging to the current user. Returns an empty list if no tasks exist.
+  - `GET /tasks/{task_id}`: Fetches a specific task, enforcing data isolation (403 Forbidden if not owned by user) and existence (404 Not Found).
+  - `PUT /tasks/{task_id}`: Partially updates a task (only provided fields). Retains 404/403 authorization checks.
+  - `DELETE /tasks/{task_id}`: Deletes a task. Returns a success message.
 
 - **`app/main.py`**:
-  - Integrated the database connection by calling `models.Base.metadata.create_all(bind=engine)`, which ensures the tables are created automatically on application startup.
+  - Included the `users.router` and `tasks.router` so the endpoints are active on the application.
+
+## Version Control
+
+- **Git Initialization**: Initialized a local Git repository.
+- **Root `.gitignore`**: Added a `.gitignore` at the root directory to safely exclude the `venv/` virtual environment, `.pytest_cache/`, and `__pycache__/` from version control.
+- **GitHub Push**: Committed all project foundation files and pushed the `main` branch to the remote repository.
+
+## Application Configuration
+
+- **`app/main.py`**:
+  - Implemented `CORSMiddleware` configured to allow all origins (`"*"`) for initial development.
+  - Registered `users.router` and `tasks.router`.
+  - Upgraded the root `GET /` endpoint to serve as a proper health check.
+
+## Bug Fixes
+
+- **`app/models.py`**: Fixed a syntax error where `primary key=True` was used instead of `primary_key=True` on the `id` columns.
+- **Dependencies**: Resolved a `ModuleNotFoundError: No module named 'passlib'` error by fully installing all dependencies from `requirements.txt` (which included `passlib[bcrypt]`, `pytest`, etc. that were missing from the initial fast setup).
+
+
