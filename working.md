@@ -119,5 +119,15 @@ User authentication and Task CRUD endpoints have been implemented and registered
 
 - **`app/models.py`**: Fixed a syntax error where `primary key=True` was used instead of `primary_key=True` on the `id` columns.
 - **Dependencies**: Resolved a `ModuleNotFoundError: No module named 'passlib'` error by fully installing all dependencies from `requirements.txt` (which included `passlib[bcrypt]`, `pytest`, etc. that were missing from the initial fast setup).
+- **Passlib/Bcrypt Bug**: Fixed a `ValueError: password cannot be longer than 72 bytes` crash on login/signup by downgrading `bcrypt` to `3.2.2` in `requirements.txt` because `passlib 1.7.4` is incompatible with `bcrypt 4.0.0+`.
+- **Swagger UI Authentication**: Refactored the `POST /auth/login` endpoint in `users.py` to use `OAuth2PasswordRequestForm` (form-data) instead of JSON. This natively integrates with FastAPI's OAuth2 scheme, enabling the green "Authorize" button in Swagger UI to handle the entire login flow automatically.
+
+*(These bug fixes have been committed and pushed to the `main` branch of the GitHub repository.)*
+
+## Manual Testing Documentation
+
+- **Smoke Tests**: Created a new folder `qa-task-manager-api/docs/test` and added `smoke_test1.md`. This file documents the manual verification steps for the authentication and task CRUD workflow using the Swagger UI, including exact JSON payloads.
+- **Automated Smoke Test**: Created and executed `smoke_test.py` to programmatically verify the end-to-end API workflow (Signup -> Login -> Bearer Token Authentication -> Create Task -> Fetch Task).
+
 
 
