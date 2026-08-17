@@ -2,10 +2,10 @@
 
 ## Project Structure
 
-A new FastAPI project has been set up from scratch in the `qa-task-manager-api` directory with the following structure:
+A new FastAPI project has been set up from scratch in the repository root directory with the following structure:
 
 ```text
-qa-task-manager-api/
+.
 ├── app/
 │   ├── __init__.py
 │   ├── main.py
@@ -136,7 +136,7 @@ User authentication and Task CRUD endpoints have been implemented and registered
 
 ## Troubleshooting
 
-- **Uvicorn `ModuleNotFoundError: No module named 'app'`**: This error occurs when starting the server from the root directory instead of the project directory. To fix this, always ensure you navigate into the `qa-task-manager-api` directory (`cd qa-task-manager-api`) before running `uvicorn app.main:app --reload`.
+- **Uvicorn `ModuleNotFoundError: No module named 'app'`**: This error occurs when starting the server from a directory that does not contain the `app` folder. This issue was resolved by moving all backend files to the repository root, so `uvicorn app.main:app --reload` now works immediately.
 - **Pydantic `ImportError: email-validator is not installed`**: This happens because `EmailStr` in the Pydantic schemas requires the `email-validator` package, which was missing. Added `email-validator` to `requirements.txt`.
 - **Pytest `TypeError: Client.__init__() got an unexpected keyword argument 'app'`**: This happens due to a version incompatibility between older versions of Starlette (used by FastAPI's `TestClient`) and newer versions of `httpx` (>=0.28.0) which removed the `app` keyword argument. This was resolved by explicitly downgrading and pinning `httpx==0.27.2` via `pip install httpx==0.27.2`.
 
@@ -144,7 +144,7 @@ User authentication and Task CRUD endpoints have been implemented and registered
 
 The new testing setup structure includes the following files:
 ```text
-qa-task-manager-api/
+.
 ├── tests/
 │   ├── __init__.py        ← already exists
 │   ├── conftest.py        ← NEW: shared fixtures
