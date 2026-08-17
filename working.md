@@ -159,3 +159,8 @@ The new testing setup structure includes the following files:
 - **`tests/test_auth.py`**: Created automated tests for the authentication endpoints. Covers valid signup (returns 201), duplicate email protection (400), and parametrized negative testing for missing or invalid signup payloads (422). Also covers login with valid credentials (returns 200 with access token), wrong password (401), non-existent email (401), and missing form data (422).
 - **`tests/test_tasks.py`**: Created 21 automated tests for the task CRUD endpoints, including creating, listing, fetching, updating, and deleting tasks, checking for proper validation (e.g., 422 for too long titles), and ensuring correct cross-user data isolation and authorization (403 Forbidden for operating on someone else's tasks).
 - **Test Reporting**: Generated a complete test report successfully by running `pytest tests/ -v --html=docs/test_report.html --self-contained-html`, which created a self-contained HTML report at `docs/test_report.html` with all 31 tests passing beautifully.
+
+## SQL Validation (Phase 5)
+
+- **`sql_validation.sql`**: Created a suite of 7 SQL queries to manually verify database integrity and constraints. The queries check for user existence, duplicate emails, task existence, foreign key mapping (task to owner), orphaned tasks, proper deletion handling, and NOT NULL/empty title constraints.
+- **`validate_db.py`**: Created a Python script that connects to `qa_tasks.db` using `sqlite3` to automatically execute the 7 SQL validation checks programmatically and print out PASS/FAIL summaries.
