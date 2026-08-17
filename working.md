@@ -164,3 +164,8 @@ The new testing setup structure includes the following files:
 
 - **`sql_validation.sql`**: Created a suite of 7 SQL queries to manually verify database integrity and constraints. The queries check for user existence, duplicate emails, task existence, foreign key mapping (task to owner), orphaned tasks, proper deletion handling, and NOT NULL/empty title constraints.
 - **`validate_db.py`**: Created a Python script that connects to `qa_tasks.db` using `sqlite3` to automatically execute the 7 SQL validation checks programmatically and print out PASS/FAIL summaries.
+- **`populate.py`**: Created a helper script to inject dummy data directly into the main `qa_tasks.db` database, ensuring the validation scripts have test data to query (since `pytest` isolated tests run on a separate wiping database).
+- **`screenshot.py`**: Created a script using Pillow to programmatically execute the test suite alongside `validate_db.py`, rendering the full terminal output to an image.
+- **`docs/db_validation_results.png`**: Generated the final screenshot showing all 7 DB validation checks passing flawlessly.
+ 
+*(These Phase 5 deliverables, including the scripts and screenshot, have been committed and pushed to the `main` branch.)*
