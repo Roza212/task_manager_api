@@ -129,5 +129,32 @@ User authentication and Task CRUD endpoints have been implemented and registered
 - **Smoke Tests**: Created a new folder `qa-task-manager-api/docs/test` and added `smoke_test1.md`. This file documents the manual verification steps for the authentication and task CRUD workflow using the Swagger UI, including exact JSON payloads.
 - **Automated Smoke Test**: Created and executed `smoke_test.py` to programmatically verify the end-to-end API workflow (Signup -> Login -> Bearer Token Authentication -> Create Task -> Fetch Task).
 
+## Repository Cleanup
 
+- **GitIgnore & Untracking**: Removed unprofessional local files from version control (`qa_tasks.db`, `smoke_test.py`, and the `docs/test/` manual testing folder) by untracking them and adding them to `.gitignore`.
+- **Untracked `fix.md`**: Removed `fix.md` from version control as requested to keep the repository professional.
 
+## Troubleshooting
+
+- **Uvicorn `ModuleNotFoundError: No module named 'app'`**: This error occurs when starting the server from the root directory instead of the project directory. To fix this, always ensure you navigate into the `qa-task-manager-api` directory (`cd qa-task-manager-api`) before running `uvicorn app.main:app --reload`.
+- **Pydantic `ImportError: email-validator is not installed`**: This happens because `EmailStr` in the Pydantic schemas requires the `email-validator` package, which was missing. Added `email-validator` to `requirements.txt`.
+- **Pytest `TypeError: Client.__init__() got an unexpected keyword argument 'app'`**: This happens due to a version incompatibility between older versions of Starlette (used by FastAPI's `TestClient`) and newer versions of `httpx` (>=0.28.0) which removed the `app` keyword argument. This was resolved by explicitly downgrading and pinning `httpx==0.27.2` via `pip install httpx==0.27.2`.
+
+## Pytest Configuration
+
+The new testing setup structure includes the following files:
+```text
+qa-task-manager-api/
+├── tests/
+│   ├── __init__.py        ← already exists
+│   ├── conftest.py        ← NEW: shared fixtures
+│   ├── test_auth.py       ← NEW: signup + login tests
+│   └── test_tasks.py      ← NEW: task CRUD + security tests
+├── pytest.ini             ← NEW: pytest config
+└── requirements.txt       ← add pytest-html if not there
+```
+
+- **`pytest.ini`**: Created to configure pytest default options (verbose, standard output enabled, and HTML report generation) and point to the `tests` directory.
+- **`tests/conftest.py`**: Configured pytest fixtures for tests. It uses a separate SQLite test database (`test_qa_tasks.db`), wipes and recreates tables per test, mocks the `get_db` FastAPI dependency with `TestClient`, and supplies `auth_headers` and `second_user_headers` for isolated cross-user testing.
+- **`tests/test_auth.py`**: Created automated tests for the authentication endpoints. Covers valid signup (returns 201), duplicate email protection (400), and parametrized negative testing for missing or invalid signup payloads (422). Also covers login with valid credentials (returns 200 with access token), wrong password (401), non-existent email (401), and missing form data (422).
+- **Test Reporting**: Generated an initial test report successfully by running `pytest tests/ -v --html=docs/test_report.html --self-contained-html`, which created a self-contained HTML report at `docs/test_report.html` with all tests passing.
