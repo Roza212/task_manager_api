@@ -49,4 +49,4 @@ tests/test_tasks.py::test_security_delete_other_user_task PASSED         [100%]
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 - Generated html report: file:///home/runner/work/task_manager_api/task_manager_api/docs/test_report.html -
-======================= 31 passed, 2 warnings in 12.23s ========================
+======================= 31 passed, 2 warnings in 11.94s ========================
