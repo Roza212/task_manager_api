@@ -31,12 +31,11 @@ jobs:
 
       - name: Run Tests with Pytest
         run: |
-          pytest tests/ -v --html=docs/test_report.html --self-contained-html > pytest_error.log 2>&1 || true
+          pytest tests/ -v --html=docs/test_report.html --self-contained-html
           
-      - name: Commit Test Report
-        run: |
-          git config --global user.name "GitHub Actions"
-          git config --global user.email "actions@github.com"
-          git add docs/test_report.html pytest_error.log
-          git commit -m "Upload failed test report and log" || true
-          git push origin HEAD:main || true
+      - name: Upload Pytest Report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: pytest-report
+          path: docs/test_report.html

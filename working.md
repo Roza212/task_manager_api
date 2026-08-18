@@ -356,3 +356,9 @@ The new testing setup structure includes the following files:
 - **`app/main.py`**: Mounted the `docs/` directory as `/static` using `StaticFiles` so the frontend can securely access the generated test reports and validation images. Registered the new `qa` router.
 - **Debugged CI/CD GitHub Actions failure**: Discovered 'python-multipart' missing from requirements.txt, causing Exit Code 4 via pytest conftest collection failure. Added 'python-multipart' and restored tests.yml.
 - **Added actions/upload-artifact step to test.yml**: To extract failing test reports for Linux runner debugging.
+
+## Project Restructuring (Phase 9)
+
+- **Repository Cleanup:** Ignored unnecessary local files in `.gitignore` (such as `pytest_error.log`). Removed leftover unused files (`report.html`, `report2.html`, `nonexistent/`) to keep the repository professional.
+- **Script Organization:** Moved all standalone Python execution and validation scripts (`populate.py`, `screenshot.py`, `smoke_test.py`, `validate_db.py`) and SQL files (`sql_validation.sql`) into a dedicated `scripts/` directory to professionalize the root folder hierarchy.
+- **CI/CD Cleanup:** Reverted the `tests.yml` GitHub Actions file back to its standard, clean state by removing temporary debugging logic (raw log capture) since the pipeline is now fully stable.
