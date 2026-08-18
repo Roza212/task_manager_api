@@ -39,23 +39,33 @@ To ensure enterprise-grade stability, this project was subjected to multiple lay
 
 ```text
 .
-├── .github/workflows/   # CI/CD Pipeline Configuration (tests.yml)
-├── app/                 # FastAPI Source Code
-│   ├── main.py          # Application Entrypoint & DB Initialization
-│   ├── auth.py          # JWT Generation & Password Hashing
-│   ├── database.py      # SQLAlchemy Engine & Session Setup
-│   ├── models.py        # Database Tables (User, Task)
-│   ├── schemas.py       # Pydantic Validation Models
-│   └── routers/         # API Route Controllers
-├── docs/                # Project Documentation & Test Reports
-├── scripts/             # Python & SQL Validation Scripts
-├── templates/           # HTML Templates (QA Dashboard)
-├── tests/               # Automated Pytest Suite
-│   ├── conftest.py      # Pytest Fixtures & Test DB Setup
-│   ├── test_auth.py     # Authentication Endpoints Tests
-│   └── test_tasks.py    # Task Management Endpoints Tests
-├── Test_Cases.xlsx      # 35 Documented Manual Test Cases
-└── requirements.txt     # Python Dependencies
+├── .github/workflows/   
+│   └── tests.yml        # GitHub Actions CI/CD Pipeline Configuration
+├── app/                 
+│   ├── main.py          # Application Entrypoint, FastAPI Instance, & DB Init
+│   ├── auth.py          # JWT Token Generation & bcrypt Password Hashing logic
+│   ├── database.py      # SQLAlchemy Engine setup and DB Session management
+│   ├── models.py        # SQLAlchemy Database Table definitions (User, Task)
+│   ├── schemas.py       # Pydantic Validation Models for requests/responses
+│   └── routers/         
+│       ├── users.py     # API Route controllers for User Signup/Login
+│       └── tasks.py     # API Route controllers for Task CRUD operations
+├── docs/                
+│   └── test_report.html # Generated HTML report from Pytest execution
+├── scripts/             
+│   ├── populate.py      # Python script to insert dummy testing data into the DB
+│   ├── screenshot.py    # Python script to capture DB validation terminal output
+│   ├── smoke_test.py    # Python script for automated E2E API smoke testing
+│   ├── validate_db.py   # Python script that executes raw SQL validation checks
+│   └── sql_validation.sql # Raw SQL queries to verify constraints & relations
+├── templates/           
+│   └── qa_dashboard.html # Premium UI HTML template for the QA Test Dashboard
+├── tests/               
+│   ├── conftest.py      # Pytest Fixtures, Mocking, and Test DB Initialization
+│   ├── test_auth.py     # Automated Pytest suite for Authentication Endpoints
+│   └── test_tasks.py    # Automated Pytest suite for Task Management Endpoints
+├── Test_Cases.xlsx      # Spreadsheet containing 35 manual test cases & results
+└── requirements.txt     # Complete list of Python project dependencies
 ```
 
 ---
