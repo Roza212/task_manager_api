@@ -169,3 +169,7 @@ The new testing setup structure includes the following files:
 - **`docs/db_validation_results.png`**: Generated the final screenshot showing all 7 DB validation checks passing flawlessly.
  
 *(These Phase 5 deliverables, including the scripts and screenshot, have been committed and pushed to the `main` branch.)*
+
+## CI/CD Pipeline (Phase 6)
+
+- **`.github/workflows/tests.yml`**: Created a GitHub Actions workflow to automatically run the full Pytest suite on every `push` and `pull_request` to the `main` branch. It runs on `ubuntu-latest`, provisions Python 3.11, installs all requirements, and executes `pytest tests/ -v --html=docs/test_report.html --self-contained-html` to guarantee new code doesn't break the application.
