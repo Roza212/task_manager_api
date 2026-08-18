@@ -1,0 +1,36 @@
+Form data requires "python-multipart" to be installed. 
+You can install "python-multipart" with: 
+
+pip install python-multipart
+
+ImportError while loading conftest '/home/runner/work/task_manager_api/task_manager_api/tests/conftest.py'.
+tests/conftest.py:7: in <module>
+    from app.main import app
+app/main.py:6: in <module>
+    from .routers import users, tasks, qa
+app/routers/users.py:30: in <module>
+    @router.post("/login", response_model=schemas.Token)
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/fastapi/routing.py:3004: in decorator
+    self.add_api_route(
+/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/fastapi/routing.py:2939: in add_api_route
+    route = route_class(
+/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/fastapi/routing.py:1193: in __init__
+    _populate_api_route_state(
+/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/fastapi/routing.py:1061: in _populate_api_route_state
+    ) = _build_dependant_with_parameterless_dependencies(
+/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/fastapi/routing.py:861: in _build_dependant_with_parameterless_dependencies
+    dependant = get_dependant(path=path, call=call, scope="function")
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/fastapi/dependencies/utils.py:322: in get_dependant
+    sub_dependant = get_dependant(
+/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/fastapi/dependencies/utils.py:296: in get_dependant
+    param_details = analyze_param(
+/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/fastapi/dependencies/utils.py:523: in analyze_param
+    ensure_multipart_is_installed()
+/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/fastapi/dependencies/utils.py:129: in ensure_multipart_is_installed
+    raise RuntimeError(multipart_not_installed_error) from None
+E   RuntimeError: Form data requires "python-multipart" to be installed.
+E   You can install "python-multipart" with:
+E
+E   pip install python-multipart
