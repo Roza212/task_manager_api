@@ -28,4 +28,4 @@ jobs:
 
       - name: Run Tests with Pytest
         run: |
-          pytest tests/ -v --html=docs/test_report.html --self-contained-html
+          pytest tests/ -v
