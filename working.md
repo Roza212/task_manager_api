@@ -362,3 +362,7 @@ The new testing setup structure includes the following files:
 - **Repository Cleanup:** Ignored unnecessary local files in `.gitignore` (such as `pytest_error.log`). Removed leftover unused files (`report.html`, `report2.html`, `nonexistent/`) to keep the repository professional.
 - **Script Organization:** Moved all standalone Python execution and validation scripts (`populate.py`, `screenshot.py`, `smoke_test.py`, `validate_db.py`) and SQL files (`sql_validation.sql`) into a dedicated `scripts/` directory to professionalize the root folder hierarchy.
 - **CI/CD Cleanup:** Reverted the `tests.yml` GitHub Actions file back to its standard, clean state by removing temporary debugging logic (raw log capture) since the pipeline is now fully stable.
+
+## Portfolio Presentation (Phase 10)
+
+- **`README.md` Rewrite:** Completely rewrote the `README.md` to serve as a comprehensive QA portfolio showcase. Included a project summary, technical stack, structural breakdown, execution instructions, automated/SQL testing instructions, and a "What I Learned" section highlighting key QA insights (test isolation, parametrization, cross-platform CI debugging, and security isolation testing). The GitHub Actions CI/CD status badge remains at the very top.
