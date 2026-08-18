@@ -173,3 +173,9 @@ The new testing setup structure includes the following files:
 ## CI/CD Pipeline (Phase 6)
 
 - **`.github/workflows/tests.yml`**: Created a GitHub Actions workflow to automatically run the full Pytest suite on every `push` and `pull_request` to the `main` branch. It runs on `ubuntu-latest`, provisions Python 3.11, installs all requirements, and executes `pytest tests/ -v --html=docs/test_report.html --self-contained-html` to guarantee new code doesn't break the application.
+
+## QA Dashboard Frontend (Phase 8)
+
+- **`templates/qa_dashboard.html`**: Created a premium, dark-mode HTML template using vanilla CSS (glassmorphism, gradient mesh, animations) to serve as the centralized QA Dashboard. It embeds the `test_report.html` in an iframe and displays the `db_validation_results.png`.
+- **`app/routers/qa.py`**: Added a new FastAPI router with a `GET /qa/dashboard` endpoint that uses `Jinja2Templates` to render the dashboard frontend.
+- **`app/main.py`**: Mounted the `docs/` directory as `/static` using `StaticFiles` so the frontend can securely access the generated test reports and validation images. Registered the new `qa` router.

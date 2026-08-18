@@ -8,3 +8,4 @@ httpx
 pytest
 pytest-html
 email-validator
+jinja2
