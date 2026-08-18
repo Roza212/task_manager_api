@@ -37,5 +37,4 @@ docs/test/
 *.db
 smoke_test.py
 fix.md
-pytest_error.log  
- 
+working.md
